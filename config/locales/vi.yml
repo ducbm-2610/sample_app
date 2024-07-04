@@ -4,4 +4,6 @@ vi:
     warnings:
       max_length_50: "Quá 50 ký tự"
       min_length_1: "ít nhất 1 ký tự"
+    new:
+      create_my_account: "Tạo tài khoản"
   
