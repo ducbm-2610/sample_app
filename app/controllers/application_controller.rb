@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+
+  include Pagy::Backend
   include SessionsHelper
+
   before_action :set_locale
+
   def set_locale
     locale = params[:locale].to_s.strip.to_sym
     I18n.locale = if I18n.available_locales.include?(locale)

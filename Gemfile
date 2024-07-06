@@ -46,6 +46,9 @@ gem "bootstrap-sass", "3.4.1"
 gem "sassc-rails"
 
 gem "rails-i18n"
+gem "faker", "2.21.0"
+
+gem "pagy"
 
 gem "config"
 
