@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
-  default_scope ->{order(created_at: :desc)}
+  has_many :microposts, dependent: :destroy
+  scope :newest, ->{order(created_at: :desc)}
 
   validates :name, presence: true,
   length: {in: 1..50, too_long: I18n.t("users.warnings.max_length_50"),
@@ -91,5 +92,9 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < Settings.digit_2.hours.ago
+  end
+
+  def feed
+    microposts
   end
 end
