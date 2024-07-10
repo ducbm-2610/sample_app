@@ -4,3 +4,5 @@ en:
     warnings:
       max_length_50: "50 characters is the maximum allowed"
       min_length_1: "1 character is the minimum allowed"
+    new:
+      create_my_account: "Create my account"
