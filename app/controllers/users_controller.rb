@@ -1,11 +1,14 @@
 class UsersController < ApplicationController
-  def show
-    @user = User.find_by id: params[:id]
-    return if @user
+  before_action :find_user, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
 
-    flash[:warning] = "User not found!"
-    redirect_to root_path
+  def index
+    @pagy, @users = pagy User.all, items: Settings.digit_10
   end
+
+  def show; end
 
   def new
     @user = User.new
@@ -24,9 +27,55 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    if @user.update user_params
+      flash[:success] = "User updated sucessfully"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @user.destroy
+      flash[:success] = "User deleted"
+    else
+      flash[:danger] = "Delete fail!"
+    end
+    redirect_to users_path
+  end
+
   private
   def user_params
     params.require(:user).permit :name, :email, :password,
                                  :password_confirmation
+  end
+
+  def admin_user
+    redirect_to root_path unless current_user.admin?
+  end
+
+  def find_user
+    @user = User.find_by id: params[:id]
+    return if @user
+
+    redirect_to root_path
+    flash[:warning] = "Not found users!"
+  end
+
+  def logged_in_user
+    return if logged_in?
+
+    store_location
+    flash[:danger] = "Please log in."
+    redirect_to login_url
+  end
+
+  def correct_user
+    return if current_user? @user
+
+    flash[:error] = "You cannot edit this account."
+    redirect_to root_url
   end
 end
