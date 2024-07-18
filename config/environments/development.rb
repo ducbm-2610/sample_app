@@ -43,28 +43,22 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
-
-  # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
-
-  # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
-
-  # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
-
-  # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
-
-  # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = {host: Figaro.env.MAIL_DEFAULT_URL}
 
-  # Annotate rendered view with file names.
-  # config.action_view.annotate_rendered_view_with_filenames = true
-
-  # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  config.action_mailer.smtp_settings = {
+    address: Figaro.env.MAIL_ADDRESS,
+    port: 587,
+    user_name: Figaro.env.MAIL_USERNAME,
+    password: Figaro.env.MAIL_PASSWORD,
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
 end

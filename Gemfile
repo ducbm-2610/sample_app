@@ -45,12 +45,13 @@ gem "bootsnap", require: false
 gem "bootstrap-sass", "3.4.1"
 gem "sassc-rails"
 
-gem "rails-i18n"
 gem "faker", "2.21.0"
+gem "rails-i18n"
 
 gem "pagy"
 
 gem "config"
+gem "figaro"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html]
 # gem "image_processing", "~> 1.2"
